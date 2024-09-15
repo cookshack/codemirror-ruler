@@ -8,10 +8,15 @@ function Ruler
 
   function update
   () {
-    let gutter
+    let gutter, pad, line
 
     gutter = view.contentDOM.getBoundingClientRect().x - view.dom.getBoundingClientRect().x
-    el.style.left = ((col * view.defaultCharacterWidth) + gutter) + 'px'
+    pad = 0
+    line = view.contentDOM.querySelector('.cm-line')
+    if (line)
+      pad = parseFloat(globalThis.window.getComputedStyle(line).getPropertyValue('padding-left'))
+
+    el.style.left = ((col * view.defaultCharacterWidth) + gutter + pad) + 'px'
   }
 
   col = 100
@@ -22,7 +27,7 @@ function Ruler
 
   el = globalThis.document.createElement('div')
   el.classList.add('cm-ruler-vert')
-  el.style.cssText = 'position: absolute; top: 0; height: 100%; width: 1px; border-left: 1px solid red;'
+  el.style.cssText = 'position: absolute; top: 0; height: 100%; width: 1px; border-left: 1px solid;'
 
   w.appendChild(el)
   view.dom.appendChild(w)
