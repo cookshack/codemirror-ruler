@@ -1,0 +1,25 @@
+{
+  "name": "@cookshack/codemirror-ruler",
+  "version": "0.1.0",
+  "description": "Ruler extension for CodeMirror 6",
+  "homepage": "https://git.sr.ht/~mattmundell/codemirror-ruler",
+  "scripts": {
+    "prepare": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://git.sr.ht/~mattmundell/codemirror-ruler"
+  },
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "rollup": "^4.21.3"
+  },
+  "license": "MIT"
+}
