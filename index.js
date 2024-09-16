@@ -19,6 +19,11 @@ function Ruler
     el.style.left = ((col * view.defaultCharacterWidth) + gutter + pad) + 'px'
   }
 
+  function free
+  () {
+    w.remove()
+  }
+
   col = 100
 
   w = globalThis.document.createElement('div')
@@ -33,7 +38,8 @@ function Ruler
   view.dom.appendChild(w)
   update()
 
-  ruler = { update }
+  ruler = { update,
+            free }
 
   return ruler
 }
@@ -47,7 +53,12 @@ class Plugin {
   update
   (update) {
     if (update.viewportChanged)
-      this.ruler.update()
+      this.ruler?.update()
+  }
+
+  destroy
+  () {
+    this.ruler?.free()
   }
 }
 
