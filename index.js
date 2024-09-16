@@ -1,6 +1,20 @@
-import { ViewPlugin } from '@codemirror/view'
+import { ViewPlugin, EditorView } from '@codemirror/view'
 
 let plugin
+export let theme
+
+theme = EditorView.baseTheme({ '.cm-ruler-w': { pointerEvents: 'none',
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                height: '100%',
+                                                width: '100%',
+                                                overflow: 'hidden' },
+                               '.cm-ruler-vert': { position: 'absolute',
+                                                   top: 0,
+                                                   height: '100%',
+                                                   width: '1px',
+                                                   borderLeft: '1px solid' } })
 
 function Ruler
 (view) {
@@ -28,11 +42,9 @@ function Ruler
 
   w = globalThis.document.createElement('div')
   w.classList.add('cm-ruler-w')
-  w.style.cssText = 'pointer-events: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden;'
 
   el = globalThis.document.createElement('div')
   el.classList.add('cm-ruler-vert')
-  el.style.cssText = 'position: absolute; top: 0; height: 100%; width: 1px; border-left: 1px solid;'
 
   w.appendChild(el)
   view.dom.appendChild(w)
