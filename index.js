@@ -1,6 +1,6 @@
 import { ViewPlugin } from '@codemirror/view'
 
-let show
+let plugin
 
 function Ruler
 (view) {
@@ -62,10 +62,10 @@ class Plugin {
   }
 }
 
-show = ViewPlugin.fromClass(Plugin)
+plugin = ViewPlugin.fromClass(Plugin)
 
 export
 function ruler
 () {
-  return show
+  return plugin
 }
