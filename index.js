@@ -1,7 +1,8 @@
 import { ViewPlugin, EditorView } from '@codemirror/view'
+import { Facet } from "@codemirror/state"
 
 let plugin
-export let theme
+export let optCol, theme
 
 theme = EditorView.baseTheme({ '.cm-ruler-w': { pointerEvents: 'none',
                                                 position: 'absolute',
@@ -15,6 +16,8 @@ theme = EditorView.baseTheme({ '.cm-ruler-w': { pointerEvents: 'none',
                                                    height: '100%',
                                                    width: '1px',
                                                    borderLeft: '1px solid' } })
+
+optCol = Facet.define({ combine: values => values.length ? Math.min(...values) : 100 })
 
 function Ruler
 (view) {
@@ -38,7 +41,7 @@ function Ruler
     w.remove()
   }
 
-  col = 100
+  col = view.state.facet(optCol)
 
   w = globalThis.document.createElement('div')
   w.classList.add('cm-ruler-w')
@@ -78,6 +81,9 @@ plugin = ViewPlugin.fromClass(Plugin)
 
 export
 function ruler
-() {
-  return plugin
+(opts) {
+  opts = opts || {}
+  return [ theme,
+           opts.col == null ? [] : optCol.of(opts.col),
+           plugin ]
 }
