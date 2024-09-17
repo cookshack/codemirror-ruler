@@ -1,8 +1,6 @@
 import { ViewPlugin, EditorView } from '@codemirror/view'
-import { Facet } from "@codemirror/state"
 
-let plugin
-export let opts, theme, exts
+let theme
 
 theme = EditorView.baseTheme({ '.cm-ruler-w': { pointerEvents: 'none',
                                                 position: 'absolute',
@@ -17,16 +15,33 @@ theme = EditorView.baseTheme({ '.cm-ruler-w': { pointerEvents: 'none',
                                                    width: '1px',
                                                    borderLeft: '1px solid' } })
 
-opts = {}
+export
+function make
+(view, opts) {
+  let plugin, exts, ruler, w, el
 
-function Ruler
-(view) {
-  let ruler, w, el, col
+  class Plugin {
+    constructor
+    () {
+    }
+
+    update
+    (update) {
+      if (ruler && update.viewportChanged)
+        ruler.update()
+    }
+
+    destroy
+    () {
+      ruler.free()
+    }
+  }
 
   function update
   () {
-    let gutter, pad, line
+    let gutter, pad, line, col
 
+    col = opts.col ?? 100
     gutter = view.contentDOM.getBoundingClientRect().x - view.dom.getBoundingClientRect().x
     pad = 0
     line = view.contentDOM.querySelector('.cm-line')
@@ -39,9 +54,16 @@ function Ruler
   function free
   () {
     w.remove()
+    ruler = null
   }
 
-  col = opts.col ?? 100
+  function set
+  (name, val) {
+    if (name == 'col') {
+      opts.col = val
+      update()
+    }
+  }
 
   w = globalThis.document.createElement('div')
   w.classList.add('cm-ruler-w')
@@ -51,47 +73,20 @@ function Ruler
 
   w.appendChild(el)
   view.dom.appendChild(w)
-  update()
 
-  ruler = { update,
-            free }
+  plugin = ViewPlugin.fromClass(Plugin)
+  exts = [ theme,
+           plugin ]
 
+  ruler = { get exts() {
+    return exts
+  },
+            //
+            free,
+            set,
+            update
+  }
+
+  ruler.update()
   return ruler
 }
-
-class Plugin {
-  constructor
-  (view) {
-    this.ruler = Ruler(view)
-  }
-
-  update
-  (update) {
-    if (update.viewportChanged)
-      this.ruler?.update()
-  }
-
-  destroy
-  () {
-    this.ruler?.free()
-  }
-}
-
-plugin = ViewPlugin.fromClass(Plugin)
-
-export
-function ruler
-(options) {
-  opts.col = options?.col
-  return [ theme,
-           plugin ]
-}
-
-export
-function set
-(name, val) {
-  if (name == 'col')
-    opts.col = val
-}
-
-exts = ruler
