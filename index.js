@@ -75,7 +75,7 @@ function make
     el.classList.add('cm-ruler-vert')
 
     w.appendChild(el)
-    view.dom.appendChild(w)
+    view.dom.prepend(w)
 
     update(view)
   }
