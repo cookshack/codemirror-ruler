@@ -16,7 +16,7 @@ Use `.cm-ruler-w` to style the line.
 
 ```javascript
 window.view = new EditorView({
-  extensions: [ ruler({ col: 80 }), ...
+  extensions: [ ruler({ col: 80 }).ext, ...
 ```
 
 ```css

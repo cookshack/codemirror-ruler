@@ -17,18 +17,19 @@ theme = EditorView.baseTheme({ '.cm-ruler-w': { pointerEvents: 'none',
 
 export
 function make
-(view, opts) {
+(opts) {
   let plugin, exts, ruler, w, el
 
   class Plugin {
     constructor
-    () {
+    (view) {
+      construct(view)
     }
 
     update
     (update) {
       if (ruler && update.viewportChanged)
-        ruler.update()
+        ruler.update(update.view)
     }
 
     destroy
@@ -38,7 +39,7 @@ function make
   }
 
   function update
-  () {
+  (view) {
     let gutter, pad, line, col
 
     col = opts.col ?? 100
@@ -58,21 +59,26 @@ function make
   }
 
   function set
-  (name, val) {
+  (view, name, val) {
     if (name == 'col') {
       opts.col = val
-      update()
+      update(view)
     }
   }
 
-  w = globalThis.document.createElement('div')
-  w.classList.add('cm-ruler-w')
+  function construct
+  (view) {
+    w = globalThis.document.createElement('div')
+    w.classList.add('cm-ruler-w')
 
-  el = globalThis.document.createElement('div')
-  el.classList.add('cm-ruler-vert')
+    el = globalThis.document.createElement('div')
+    el.classList.add('cm-ruler-vert')
 
-  w.appendChild(el)
-  view.dom.appendChild(w)
+    w.appendChild(el)
+    view.dom.appendChild(w)
+
+    update(view)
+  }
 
   plugin = ViewPlugin.fromClass(Plugin)
   exts = [ theme,
@@ -87,6 +93,5 @@ function make
             update
   }
 
-  ruler.update()
   return ruler
 }
