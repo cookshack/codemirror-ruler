@@ -15,8 +15,9 @@ Use `.cm-ruler-w` to style the line.
 ## Example
 
 ```javascript
+import * as Ruler from '@cookshack/codemirror-ruler'
 window.view = new EditorView({
-  extensions: [ ruler({ col: 80 }).ext, ...
+  extensions: [ Ruler.make({ col: 80 }).exts, ...
 ```
 
 ```css
