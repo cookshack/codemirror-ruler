@@ -4,6 +4,7 @@
   "description": "Ruler extension for CodeMirror 6",
   "homepage": "https://git.sr.ht/~mattmundell/codemirror-ruler",
   "scripts": {
+    "check": "NODE_OPTIONS=--disable-warning=ExperimentalWarning npx eslint --no-warn-ignored -f ./node_modules/@cookshack/eslint-config/dist/formatter.js -c ./node_modules/@cookshack/eslint-config/dist/index.js *.js",
     "prepare": "rollup -c"
   },
   "repository": {
@@ -19,6 +20,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@cookshack/eslint-config": "file:../eslint-config/latest.tgz",
     "rollup": "^4.21.3"
   },
   "license": "MIT"
