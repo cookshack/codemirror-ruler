@@ -22,7 +22,7 @@
   "sideEffects": false,
   "dependencies": {
     "@cookshack/eslint-config": "file:../eslint-config/latest.tgz",
-    "rollup": "^4.21.3"
+    "rollup": "^4.28.0"
   },
   "license": "MIT",
   "devDependencies": {
