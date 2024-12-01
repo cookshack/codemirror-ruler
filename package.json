@@ -21,12 +21,12 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@cookshack/eslint-config": "file:../eslint-config/latest.tgz",
     "rollup": "^4.28.0"
   },
   "license": "MIT",
   "devDependencies": {
     "@cookshack/build": "^0.1.0",
+    "@cookshack/eslint-config": "^0.1.6",
     "husky": "^9.1.7"
   }
 }
