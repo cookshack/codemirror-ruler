@@ -5,7 +5,7 @@
   "homepage": "https://git.sr.ht/~mattmundell/codemirror-ruler",
   "scripts": {
     "check": "./node_modules/@cookshack/build/bin/check *.js",
-    "prepare": "husky && rollup -c",
+    "prepare": "./node_modules/@cookshack/build/bin/prepare",
     "test": "true"
   },
   "repository": {
